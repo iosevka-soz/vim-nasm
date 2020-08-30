@@ -9,7 +9,7 @@ function! s:Run_nasm()
     let s:curr_full_path = expand('%:p')
 
     if(!exists("g:vim_nasm_disable_auto_write"))
-        execute "normal! :write"<CR>
+        execute ":write"
     endif
 
     if (exists("g:nasm_run")) && (exists("g:linker_run"))
@@ -28,7 +28,6 @@ endfunction
 
 function! s:do_run()
     let l:run_line = printf("%s %s && %s %s.o && %s && rm -f %s %s.o\n", s:nasm_run, shellescape(s:curr_full_path), s:linker_run, s:default_template, s:default_template, s:default_template, s:default_template)
-    echo l:run_line
     execute "below 10split | terminal " . l:run_line
 endfunction
 
