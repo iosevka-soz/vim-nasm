@@ -31,4 +31,19 @@ function! s:do_run()
     execute "below 10split | terminal " . l:run_line
 endfunction
 
+function! s:Save_nasm()
+    if (exists("g:vim_nasm_save_skip_confirmation"))
+        let l:confirmation = ""
+    else 
+        let l:confirmation = "c"
+    endif
+    rightbelow vsplit $MYVIMRC
+    execute ":%s/^let g:nasm_run\\s\*=\\s\*\.\*/let g:nasm_run = \"" . g:nasm_run . "\"/g" . confirmation
+    execute ":%s/^let g:linker_run\\s\*=\\s\*\.\*/let g:linker_run = \"" . g:linker_run . "\"/g" . confirmation
+    execute ":write"
+    execute ":quit"
+    wincmd p
+endfunction
+
 command! RunNasm call <SID>Run_nasm()
+command! SaveNasm call <SID>Save_nasm()
